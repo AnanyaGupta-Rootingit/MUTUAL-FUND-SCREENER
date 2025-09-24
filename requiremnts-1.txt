@@ -1,0 +1,11 @@
+pandas 
+numpy
+matplotlib.pyplot
+seaborn
+plotly.graph_objects
+sklearn.preprocessing.MinMaxScaler
+mftool
+datetime
+os: 
+ipywidgets
+scipy.stats.zscore
