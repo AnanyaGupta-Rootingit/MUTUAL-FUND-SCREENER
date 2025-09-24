@@ -486,11 +486,4 @@ else:
 # Add instructions on how to run the Streamlit app
 st.markdown("""
 ---
-**How to run this Streamlit app:**
 
-1. Save the code above as a Python file (e.g., `mutual_fund_app.py`).
-2. Open your terminal or command prompt.
-3. Navigate to the directory where you saved the file.
-4. Run the command: `streamlit run mutual_fund_app.py`
-5. Your web browser will open with the Streamlit application.
-""")
