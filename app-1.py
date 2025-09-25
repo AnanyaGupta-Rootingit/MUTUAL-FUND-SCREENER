@@ -37,7 +37,7 @@ st.sidebar.header("Filter Options")
 min_return = st.sidebar.slider("Minimum Return (%)", 0, 20, 5)
 max_volatility = st.sidebar.slider("Maximum Volatility (%)", 0, 20, 12)
 
-filtered_df = df[(df["Return"] >= min_return) & (df["Volatility"] <= max_volatility)]
+filtered_df = df[(df["Return"] >= min_return) & (df["Volatility"] <= max_volatility)].copy()
 
 # --------------------
 # Display Data
@@ -53,16 +53,35 @@ st.subheader("Performance Visualization")
 col1, col2 = st.columns(2)
 
 with col1:
-    fig, ax = plt.subplots()
-    sns.scatterplot(data=filtered_df, x="Volatility", y="Return", hue="Fund", s=100, ax=ax)
-    plt.title("Return vs Volatility")
-    st.pyplot(fig)
+    if not filtered_df.empty:
+        fig, ax = plt.subplots()
+        sns.scatterplot(
+            data=filtered_df,
+            x="Volatility",
+            y="Return",
+            hue="Fund",
+            s=100,
+            ax=ax
+        )
+        ax.set_title("Return vs Volatility")
+        st.pyplot(fig)
+    else:
+        st.warning("No funds match the filter criteria for the scatter plot.")
 
 with col2:
-    fig2 = px.bar(filtered_df, x="Fund", y="Expense_Ratio", color="Fund",
-                  title="Expense Ratio Comparison", text="Expense_Ratio")
-    fig2.update_traces(texttemplate='%{text:.2f}%', textposition='outside')
-    st.plotly_chart(fig2, use_container_width=True)
+    if not filtered_df.empty:
+        fig2 = px.bar(
+            filtered_df,
+            x="Fund",
+            y="Expense_Ratio",
+            color="Fund",
+            title="Expense Ratio Comparison",
+            text="Expense_Ratio"
+        )
+        fig2.update_traces(texttemplate='%{text:.2f}%', textposition='outside')
+        st.plotly_chart(fig2, use_container_width=True)
+    else:
+        st.warning("No funds match the filter criteria for the bar chart.")
 
 # --------------------
 # Smart Scoring
@@ -76,6 +95,11 @@ w_expense = st.slider("Weight for Expense Ratio", 0.0, 1.0, 0.2)
 def calculate_score(row, w1, w2, w3):
     return (w1 * row["Return"]) - (w2 * row["Volatility"]) - (w3 * row["Expense_Ratio"])
 
-filtered_df["Score"] = filtered_df.apply(lambda row: calculate_score(row, w_return, w_risk, w_expense), axis=1)
-
-st.dataframe(filtered_df.sort_values("Score", ascending=False))
+if not filtered_df.empty:
+    filtered_df["Score"] = filtered_df.apply(
+        lambda row: calculate_score(row, w_return, w_risk, w_expense),
+        axis=1
+    )
+    st.dataframe(filtered_df.sort_values("Score", ascending=False))
+else:
+    st.info("No funds available to calculate score.")
