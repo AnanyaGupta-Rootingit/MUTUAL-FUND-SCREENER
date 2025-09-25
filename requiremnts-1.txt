@@ -1,12 +1,7 @@
 streamlit
-pandas 
+pandas
 numpy
-matplotlib.pyplot
+scipy
+matplotlib
 seaborn
-plotly.graph_objects
-sklearn.preprocessing.MinMaxScaler
-mftool
-datetime
-os
-scipy.stats.zscore
-
+plotly
