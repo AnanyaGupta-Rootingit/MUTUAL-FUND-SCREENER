@@ -1,3 +1,4 @@
+streamlit
 pandas 
 numpy
 matplotlib.pyplot
@@ -6,6 +7,6 @@ plotly.graph_objects
 sklearn.preprocessing.MinMaxScaler
 mftool
 datetime
-os: 
+os
 ipywidgets
 scipy.stats.zscore
