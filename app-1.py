@@ -5,7 +5,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.graph_objects as go
+import plotly.graph
 from datetime import datetime
 
 # -----------------------------
@@ -155,3 +155,4 @@ if st.checkbox("Show NAV Trend Example"):
     st.plotly_chart(fig, use_container_width=True)
 
 st.markdown("---\n**Run locally:** `streamlit run app.py`")
+
